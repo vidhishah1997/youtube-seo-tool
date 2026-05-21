@@ -1,412 +1,251 @@
 <!DOCTYPE html>
+<html class="light" lang="en">
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>YouTube Data Extractor v2.0 - Dashboard</title>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Sora Font -->
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "on-background": "#1b1c1c",
-                      "surface-container": "#efeded",
-                      "secondary-fixed": "#e4e2e1",
-                      "on-secondary-fixed-variant": "#474746",
-                      "surface-tint": "#c00100",
-                      "background": "#fbf9f8",
-                      "on-surface": "#1b1c1c",
-                      "on-secondary": "#ffffff",
-                      "tertiary-fixed-dim": "#c6c6c7",
-                      "secondary-fixed-dim": "#c8c6c5",
-                      "surface-container-lowest": "#ffffff",
-                      "error": "#ba1a1a",
-                      "inverse-primary": "#ffb4a8",
-                      "error-container": "#ffdad6",
-                      "on-tertiary": "#ffffff",
-                      "surface-variant": "#e4e2e2",
-                      "primary-fixed": "#ffdad4",
-                      "primary-fixed-dim": "#ffb4a8",
-                      "outline": "#956d67",
-                      "on-secondary-fixed": "#1b1c1c",
-                      "on-primary-fixed": "#410000",
-                      "on-primary": "#ffffff",
-                      "inverse-surface": "#303031",
-                      "outline-variant": "#ebbbb4",
-                      "surface": "#fbf9f8",
-                      "tertiary-container": "#737575",
-                      "inverse-on-surface": "#f2f0f0",
-                      "primary-container": "#eb0000",
-                      "on-tertiary-container": "#fcfcfc",
-                      "surface-bright": "#fbf9f8",
-                      "on-error-container": "#93000a",
-                      "on-tertiary-fixed": "#1a1c1c",
-                      "on-secondary-container": "#656464",
-                      "secondary-container": "#e4e2e1",
-                      "surface-container-high": "#e9e8e7",
-                      "tertiary-fixed": "#e2e2e2",
-                      "surface-dim": "#dbdad9",
-                      "on-surface-variant": "#603e39",
-                      "surface-container-low": "#f5f3f3",
-                      "on-tertiary-fixed-variant": "#454747",
-                      "on-primary-fixed-variant": "#930100",
-                      "tertiary": "#5b5c5c",
-                      "on-primary-container": "#fffbff",
-                      "surface-container-highest": "#e4e2e2",
-                      "on-error": "#ffffff",
-                      "primary": "#bc0100",
-                      "secondary": "#5f5e5e"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "gutter": "24px",
-                      "xs": "4px",
-                      "md": "24px",
-                      "xl": "64px",
-                      "base": "8px",
-                      "sm": "12px",
-                      "lg": "40px",
-                      "container-max": "1280px"
-              },
-              "fontFamily": {
-                      "body-md": ["Sora"],
-                      "headline-lg-mobile": ["Sora"],
-                      "display": ["Sora"],
-                      "body-lg": ["Sora"],
-                      "headline-md": ["Sora"],
-                      "label-bold": ["Sora"],
-                      "headline-lg": ["Sora"],
-                      "body-sm": ["Sora"]
-              },
-              "fontSize": {
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
-                      "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
-                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
-              }
-            },
-          },
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+    <title>YouTube Data Extractor</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            font-family: 'Sora', sans-serif;
         }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+
         .glass-card {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255,255,255,0.7);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255,255,255,0.3);
         }
+
         .red-gradient-bg {
             background: radial-gradient(circle at 100% 0%, #fff1f1 0%, #fbf9f8 50%);
         }
-        .accent-line {
-            height: 2px;
-            width: 40px;
-            background: #bc0100;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #e4e2e2;
-            border-radius: 10px;
-        }
-        .scale-interaction:active {
-            transform: scale(0.98);
+
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24;
         }
     </style>
+
 </head>
-<body class="bg-background text-on-background font-body-md red-gradient-bg min-h-screen flex flex-col">
-<!-- TopNavBar -->
-<header class="sticky top-0 z-50 flex justify-between items-center w-full px-6 py-4 max-w-container-max mx-auto bg-surface/70 backdrop-blur-md border-b-2 border-primary/10 shadow-sm">
-<div class="font-display text-headline-md text-primary flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
-<span class="hidden md:block">YouTube Data Extractor</span>
-<span class="bg-primary/10 text-primary px-2 py-0.5 rounded-full text-label-bold font-label-bold">v2.0</span>
-</div>
-<nav class="hidden md:flex gap-8 items-center">
-<a class="font-body-md text-body-md text-primary border-b-2 border-primary font-bold pb-1" href="#">Dashboard</a>
-<a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors" href="#">History</a>
-<a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors" href="#">API Docs</a>
-</nav>
-<div class="flex items-center gap-4">
-<button class="p-2 rounded-xl hover:bg-surface-variant/50 transition-all duration-200 text-secondary">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<button class="p-2 rounded-xl hover:bg-surface-variant/50 transition-all duration-200 text-secondary">
-<span class="material-symbols-outlined">settings</span>
-</button>
-<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border-2 border-primary/10">
-<img alt="User Profile Avatar" data-alt="A clean, minimalist studio headshot of a professional user with a friendly expression. The background is a soft, neutral gray that complements a high-performance, modern UI. The lighting is diffused and professional, emphasizing a crisp and clean digital-first lifestyle aesthetic appropriate for a premium data analytics dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqZ8gF2MloLGbxDvoAdf8oaoYmdvz2C797G5YcAvnaOE0vYH7YyykkZyAUNhjgAz1rEihP2MIPjkzz8j-5R2qNpHJhVUde7i2Lkuj9mHxVFIzZYhopAl4QLOA9NWFDks-cif6W7b-3SVDDaRAFISuKSDcffRfSU09J7VfeEpa47E8ZPWa5_diganBGOrrkQAaXO6I2BaFTvlVr70yMkLS8X8Gk3Apb1HhSTskJVpxsvsUmyTqpS0thTJ_AuB54uctM7smGpmrzx76z"/>
-</div>
-</div>
-</header>
-<main class="flex-grow w-full max-w-container-max mx-auto px-6 py-10">
-<!-- Hero Section -->
-<section class="mb-16 text-center lg:text-left">
-<div class="max-w-3xl">
-<h1 class="font-display text-display text-on-background mb-6">
-                    Extract <span class="text-primary">ALL</span> video data from channels &amp; playlists
-                </h1>
-<div class="flex flex-wrap gap-3 justify-center lg:justify-start">
-<span class="px-4 py-2 rounded-full glass-card border-outline-variant/30 text-secondary font-label-bold text-label-bold flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px]">person</span> Channel Extraction
-                    </span>
-<span class="px-4 py-2 rounded-full glass-card border-outline-variant/30 text-secondary font-label-bold text-label-bold flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px]">playlist_play</span> Playlist Extraction
-                    </span>
-<span class="px-4 py-2 rounded-full glass-card border-outline-variant/30 text-secondary font-label-bold text-label-bold flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px]">lock</span> Privacy Status
-                    </span>
-<span class="px-4 py-2 rounded-full glass-card border-outline-variant/30 text-secondary font-label-bold text-label-bold flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px]">bolt</span> Shorts Detection
-                    </span>
-<span class="px-4 py-2 rounded-full glass-card border-outline-variant/30 text-secondary font-label-bold text-label-bold flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px]">download</span> CSV Export
-                    </span>
-</div>
-</div>
-</section>
-<!-- Selection Cards (Bento-ish) -->
-<section class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-12">
-<div class="glass-card rounded-[16px] p-8 transition-all hover:shadow-lg hover:-translate-y-1 cursor-pointer border-t-2 border-primary group">
-<div class="flex justify-between items-start mb-6">
-<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary transition-transform group-hover:scale-110">
-<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
-</div>
-<span class="bg-primary text-white px-3 py-1 rounded-full text-label-bold">Popular</span>
-</div>
-<h3 class="font-headline-md text-headline-md mb-2">YouTube Channel</h3>
-<p class="text-secondary font-body-sm text-body-sm leading-relaxed">
-                    Extract all metadata from a specific channel using the channel ID or handle (e.g., @mrbeast). Includes total view counts and upload history.
+
+<body class="bg-gray-50 red-gradient-bg min-h-screen text-gray-800">
+
+    <!-- Header -->
+
+    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b shadow-sm">
+
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+            <div class="flex items-center gap-3">
+
+                <span class="material-symbols-outlined text-red-600 text-4xl">
+                    play_circle
+                </span>
+
+                <div>
+                    <h1 class="text-2xl font-bold text-red-600">
+                        YouTube Data Extractor
+                    </h1>
+
+                    <p class="text-sm text-gray-500">
+                        SEO Dashboard
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- Main -->
+
+    <main class="max-w-7xl mx-auto px-6 py-12">
+
+        <!-- Hero -->
+
+        <section class="mb-12">
+
+            <h2 class="text-5xl font-extrabold mb-6 leading-tight">
+                Extract YouTube Channel & Playlist Data
+            </h2>
+
+            <p class="text-lg text-gray-600 max-w-3xl">
+                Upload your extraction file and generate structured YouTube metadata reports for SEO analysis, automation and reporting workflows.
+            </p>
+
+        </section>
+
+        <!-- Features -->
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+
+            <div class="glass-card rounded-2xl p-6">
+                <span class="material-symbols-outlined text-red-600 text-4xl mb-4">
+                    analytics
+                </span>
+
+                <h3 class="text-xl font-bold mb-2">
+                    SEO Extraction
+                </h3>
+
+                <p class="text-gray-600">
+                    Extract views, likes, upload dates, video URLs and metadata.
                 </p>
-</div>
-<div class="glass-card rounded-[16px] p-8 transition-all hover:shadow-lg hover:-translate-y-1 cursor-pointer border-t-2 border-outline-variant group">
-<div class="flex justify-between items-start mb-6">
-<div class="w-14 h-14 bg-surface-container rounded-2xl flex items-center justify-center text-secondary transition-transform group-hover:scale-110">
-<span class="material-symbols-outlined text-4xl">playlist_play</span>
-</div>
-</div>
-<h3 class="font-headline-md text-headline-md mb-2">YouTube Playlist</h3>
-<p class="text-secondary font-body-sm text-body-sm leading-relaxed">
-                    Target specific collections by entering a Playlist ID. Perfect for competitive analysis or localized content monitoring.
+            </div>
+
+            <div class="glass-card rounded-2xl p-6">
+                <span class="material-symbols-outlined text-red-600 text-4xl mb-4">
+                    playlist_play
+                </span>
+
+                <h3 class="text-xl font-bold mb-2">
+                    Playlist Tracking
+                </h3>
+
+                <p class="text-gray-600">
+                    Analyze playlists and identify content grouping opportunities.
                 </p>
-</div>
-</section>
-<!-- Input Form Area -->
-<section class="mb-12">
-<div class="glass-card rounded-[16px] p-8">
-<div class="flex flex-col md:flex-row gap-4 items-end">
-<div class="flex-grow w-full space-y-2">
-<label class="font-label-bold text-label-bold text-secondary uppercase tracking-wider">Enter Channel Handle or Playlist URL</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-secondary">link</span>
-<input class="w-full pl-12 pr-4 py-4 rounded-[16px] border-[1.5px] border-outline-variant focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none bg-white" placeholder="e.g. https://youtube.com/@mrbeast or PL_id..." type="text"/>
-</div>
-</div>
-<button class="bg-primary hover:bg-[#D30000] text-white px-8 py-4 rounded-[16px] font-headline-md text-headline-md flex items-center gap-2 transition-all scale-interaction shadow-lg shadow-primary/20 whitespace-nowrap">
-<span class="material-symbols-outlined">rocket_launch</span>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6">
+                <span class="material-symbols-outlined text-red-600 text-4xl mb-4">
+                    download
+                </span>
+
+                <h3 class="text-xl font-bold mb-2">
+                    CSV Export
+                </h3>
+
+                <p class="text-gray-600">
+                    Download extracted reports for SEO reporting and dashboards.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- Upload Form -->
+
+        <section class="glass-card rounded-3xl p-8 shadow-lg">
+
+            <h3 class="text-3xl font-bold mb-8">
+                Upload File For Extraction
+            </h3>
+
+            <form action="/extract" method="POST" enctype="multipart/form-data">
+
+                <div class="flex flex-col md:flex-row gap-6 items-end">
+
+                    <div class="flex-grow w-full">
+
+                        <label class="block text-sm font-semibold mb-3 uppercase tracking-wide text-gray-500">
+                            Select File
+                        </label>
+
+                        <input
+                            type="file"
+                            name="file"
+                            required
+                            class="w-full bg-white border-2 border-gray-200 rounded-2xl p-4 focus:outline-none focus:border-red-500"
+                        >
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all shadow-lg"
+                    >
                         Start Extraction
                     </button>
-</div>
-<!-- Playlist Helper -->
-<div class="mt-8 p-4 bg-[#FFF9F9] border border-primary/10 rounded-xl flex gap-4 items-start">
-<span class="material-symbols-outlined text-primary">info</span>
-<div class="font-body-sm text-body-sm">
-<p class="font-bold text-primary mb-1">Need help finding the ID?</p>
-<p class="text-secondary">Navigate to the playlist on YouTube. The ID is the string of characters after <code class="bg-white px-1 border border-primary/10 rounded">list=</code> in the URL. Example: PLWw6RLm6S_q0-z2k-lHnL_u6qY8O5f8m</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Results Mockup (Initially hidden in a real app, shown here for visual demo) -->
-<section class="space-y-gutter">
-<div class="flex justify-between items-center">
-<div>
-<h2 class="font-headline-lg text-headline-lg mb-1">Extraction Results</h2>
-<p class="text-secondary">Last updated: 2 minutes ago</p>
-</div>
-<div class="flex gap-3">
-<button class="px-6 py-2.5 rounded-xl border-[1.5px] border-primary text-primary font-body-md hover:bg-primary/5 transition-all flex items-center gap-2 scale-interaction">
-<span class="material-symbols-outlined">download</span> Export CSV
-                    </button>
-<button class="px-6 py-2.5 rounded-xl border-[1.5px] border-primary text-primary font-body-md hover:bg-primary/5 transition-all flex items-center gap-2 scale-interaction">
-<span class="material-symbols-outlined">share</span> Share Report
-                    </button>
-</div>
-</div>
-<!-- Stats Grid -->
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-<div class="glass-card p-6 rounded-[16px] border-b-2 border-transparent hover:border-primary transition-all">
-<p class="font-label-bold text-label-bold text-secondary mb-1">TOTAL VIDEOS</p>
-<p class="text-headline-lg font-headline-lg">800</p>
-</div>
-<div class="glass-card p-6 rounded-[16px] border-b-2 border-transparent hover:border-primary transition-all">
-<p class="font-label-bold text-label-bold text-secondary mb-1">SHORTS</p>
-<p class="text-headline-lg font-headline-lg">120</p>
-</div>
-<div class="glass-card p-6 rounded-[16px] border-b-2 border-transparent hover:border-primary transition-all">
-<p class="font-label-bold text-label-bold text-secondary mb-1">PUBLIC</p>
-<p class="text-headline-lg font-headline-lg text-emerald-600">750</p>
-</div>
-<div class="glass-card p-6 rounded-[16px] border-b-2 border-transparent hover:border-primary transition-all">
-<p class="font-label-bold text-label-bold text-secondary mb-1">TOTAL VIEWS</p>
-<p class="text-headline-lg font-headline-lg">250M</p>
-</div>
-</div>
-<!-- Data Table Container -->
-<div class="glass-card rounded-[16px] overflow-hidden border border-outline-variant/30">
-<div class="bg-white border-b border-outline-variant/30 p-4 flex justify-between items-center">
-<h4 class="font-headline-md text-headline-md">Video Inventory</h4>
-<div class="relative">
-<input class="pl-10 pr-4 py-2 border border-outline-variant rounded-full text-body-sm font-body-sm focus:border-primary focus:ring-0 outline-none" placeholder="Filter results..." type="text"/>
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-lg">filter_list</span>
-</div>
-</div>
-<div class="overflow-x-auto custom-scrollbar">
-<table class="w-full text-left border-collapse">
-<thead class="bg-[#FFF9F9] border-t-2 border-primary">
-<tr>
-<th class="p-4 font-label-bold text-label-bold text-secondary">TITLE</th>
-<th class="p-4 font-label-bold text-label-bold text-secondary">DATE</th>
-<th class="p-4 font-label-bold text-label-bold text-secondary">PRIVACY</th>
-<th class="p-4 font-label-bold text-label-bold text-secondary">VIEWS</th>
-<th class="p-4 font-label-bold text-label-bold text-secondary">LIKES</th>
-<th class="p-4 font-label-bold text-label-bold text-secondary">DURATION</th>
-<th class="p-4 font-label-bold text-label-bold text-secondary">TYPE</th>
-<th class="p-4 font-label-bold text-label-bold text-secondary">URL</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-outline-variant/20">
-<tr class="hover:bg-primary/5 transition-colors group">
-<td class="p-4 font-body-md text-body-md font-semibold truncate max-w-xs">Giving Away 1 Million Dollars</td>
-<td class="p-4 font-body-sm text-body-sm text-secondary">Oct 24, 2023</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-label-bold text-[10px] uppercase">Public</span>
-</td>
-<td class="p-4 font-body-sm text-body-sm">182,402,112</td>
-<td class="p-4 font-body-sm text-body-sm">9.2M</td>
-<td class="p-4 font-body-sm text-body-sm">14:02</td>
-<td class="p-4 font-body-sm text-body-sm">Video</td>
-<td class="p-4">
-<a class="text-primary hover:underline" href="#"><span class="material-symbols-outlined">open_in_new</span></a>
-</td>
-</tr>
-<tr class="bg-[#FFF9F9]/50 hover:bg-primary/5 transition-colors group">
-<td class="p-4 font-body-md text-body-md font-semibold truncate max-w-xs">I Spent 50 Hours In Solitary Confinement</td>
-<td class="p-4 font-body-sm text-body-sm text-secondary">Dec 12, 2023</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-label-bold text-[10px] uppercase">Public</span>
-</td>
-<td class="p-4 font-body-sm text-body-sm">240,119,003</td>
-<td class="p-4 font-body-sm text-body-sm">12.1M</td>
-<td class="p-4 font-body-sm text-body-sm">18:45</td>
-<td class="p-4 font-body-sm text-body-sm">Video</td>
-<td class="p-4">
-<a class="text-primary hover:underline" href="#"><span class="material-symbols-outlined">open_in_new</span></a>
-</td>
-</tr>
-<tr class="hover:bg-primary/5 transition-colors group">
-<td class="p-4 font-body-md text-body-md font-semibold truncate max-w-xs">Insane Trickshots 101</td>
-<td class="p-4 font-body-sm text-body-sm text-secondary">Jan 05, 2024</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 font-label-bold text-[10px] uppercase">Unlisted</span>
-</td>
-<td class="p-4 font-body-sm text-body-sm">12,402</td>
-<td class="p-4 font-body-sm text-body-sm">450</td>
-<td class="p-4 font-body-sm text-body-sm">00:58</td>
-<td class="p-4 font-body-sm text-body-sm">Short</td>
-<td class="p-4">
-<a class="text-primary hover:underline" href="#"><span class="material-symbols-outlined">open_in_new</span></a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="p-4 bg-surface-container-low flex justify-between items-center text-body-sm text-secondary">
-<span>Showing 1-3 of 800 results</span>
-<div class="flex gap-2">
-<button class="p-2 hover:bg-surface-variant rounded-lg transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
-<button class="p-2 hover:bg-surface-variant rounded-lg transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="w-full py-8 px-6 mt-auto flex flex-col md:flex-row justify-between items-center gap-4 bg-surface-container-highest border-t border-outline-variant">
-<div class="font-headline-md text-headline-md text-primary">
-<span class="material-symbols-outlined align-middle" style="font-variation-settings: 'FILL' 1;">analytics</span>
-            Extractor Pro
-        </div>
-<div class="font-label-bold text-label-bold text-on-surface-variant">
-            Powered by YouTube Data API v3. © 2024 Data Extractor
-        </div>
-<div class="flex gap-6">
-<a class="text-on-surface-variant hover:text-primary font-label-bold text-label-bold transition-colors" href="#">Privacy Policy</a>
-<a class="text-on-surface-variant hover:text-primary font-label-bold text-label-bold transition-colors" href="#">Terms of Service</a>
-<a class="text-on-surface-variant hover:text-primary font-label-bold text-label-bold transition-colors" href="#">API Status</a>
-</div>
-</footer>
-<!-- Toast Mockup -->
-<div class="fixed top-24 right-6 glass-card p-4 rounded-xl shadow-xl flex items-center gap-4 border-l-4 border-emerald-500 transform translate-x-full transition-transform duration-500 ease-out z-[100]" id="toast">
-<div class="bg-emerald-100 text-emerald-600 p-2 rounded-full">
-<span class="material-symbols-outlined">check_circle</span>
-</div>
-<div>
-<p class="font-bold text-on-surface">Data extraction complete</p>
-<p class="text-body-sm text-secondary">800 videos parsed successfully.</p>
-</div>
-<button class="text-secondary hover:text-on-surface" onclick="hideToast()">
-<span class="material-symbols-outlined">close</span>
-</button>
-</div>
-<script>
-        // Micro-interactions
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.style.transform = 'translateX(0)';
-            setTimeout(hideToast, 5000);
-        }
 
-        function hideToast() {
-            const toast = document.getElementById('toast');
-            toast.style.transform = 'translateX(calc(100% + 24px))';
-        }
+                </div>
 
-        // Trigger toast on load for demo purposes
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(showToast, 1500);
-        });
+            </form>
 
-        // Search Bar Focus Effect
-        const searchInput = document.querySelector('input[type="text"]');
-        searchInput.addEventListener('focus', () => {
-            searchInput.parentElement.classList.add('shadow-md');
-        });
-        searchInput.addEventListener('blur', () => {
-            searchInput.parentElement.classList.remove('shadow-md');
-        });
-    </script>
-</body></html>
+        </section>
+
+        <!-- Mock Results -->
+
+        <section class="mt-16">
+
+            <div class="flex justify-between items-center mb-6">
+
+                <div>
+                    <h3 class="text-3xl font-bold">
+                        Extraction Results
+                    </h3>
+
+                    <p class="text-gray-500">
+                        Example dashboard preview
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Stats -->
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+
+                <div class="glass-card p-6 rounded-2xl">
+                    <p class="text-sm uppercase text-gray-500 mb-2">
+                        Total Videos
+                    </p>
+
+                    <p class="text-3xl font-bold">
+                        800
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl">
+                    <p class="text-sm uppercase text-gray-500 mb-2">
+                        Shorts
+                    </p>
+
+                    <p class="text-3xl font-bold">
+                        120
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl">
+                    <p class="text-sm uppercase text-gray-500 mb-2">
+                        Public Videos
+                    </p>
+
+                    <p class="text-3xl font-bold text-green-600">
+                        750
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl">
+                    <p class="text-sm uppercase text-gray-500 mb-2">
+                        Total Views
+                    </p>
+
+                    <p class="text-3xl font-bold">
+                        250M
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
