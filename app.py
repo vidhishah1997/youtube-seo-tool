@@ -1,12 +1,6 @@
 from flask import Flask, render_template, request
-import os
 
 app = Flask(__name__)
-
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
 @app.route('/')
@@ -16,21 +10,20 @@ def home():
 
 @app.route('/extract', methods=['POST'])
 def extract():
-    
-    youtube_url = request.form['youtube_url']
 
-    if uploaded_file.filename == '':
-        return "No file selected"
+    youtube_url = request.form.get('youtube_url')
 
-    filepath = os.path.join(
-        app.config["UPLOAD_FOLDER"],
-        uploaded_file.filename
-    )
+    if not youtube_url:
+        return "No YouTube URL entered"
 
-    uploaded_file.save(filepath)
+    return f"""
+    <h1>Extraction Started</h1>
 
-    return f"File uploaded successfully: {uploaded_file.filename}"
+    <p><strong>You entered:</strong></p>
+
+    <p>{youtube_url}</p>
+    """
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+    app.run(host='0.0.0.0', port=5000)
