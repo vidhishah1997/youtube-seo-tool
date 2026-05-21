@@ -20,21 +20,33 @@ app = Flask(__name__)
 
 API_KEY = "AIzaSyAx5hlZXqed1Vc3PvfbQC6PfSEgHJNSci0"
 
-youtube = build('youtube', 'v3', developerKey=API_KEY)
+youtube = build(
+    'youtube',
+    'v3',
+    developerKey=API_KEY
+)
 
 # ============================================================
 # HELPER FUNCTIONS
 # ============================================================
 
 def retry_api_call(func, retries=5, delay=5):
+
     for attempt in range(retries):
+
         try:
             return func()
-        except HttpError:
+
+        except HttpError as e:
+
             if attempt < retries - 1:
+
+                print(f"Retrying API call... {attempt + 1}")
+
                 time.sleep(delay)
+
             else:
-                raise
+                raise e
 
 
 def detect_url_type(url):
@@ -45,13 +57,21 @@ def detect_url_type(url):
     elif re.search(r'/channel/([^/?]+)', url):
         return 'channel_id'
 
+    elif 'list=' in url:
+        return 'playlist'
+
     return 'unknown'
 
+
+# ============================================================
+# CHANNEL FUNCTIONS
+# ============================================================
 
 def get_channel_id_from_url(url):
 
     url_type = detect_url_type(url)
 
+    # HANDLE URL
     if url_type == 'handle':
 
         handle = re.search(r'/@([^/?]+)', url).group(1)
@@ -63,14 +83,21 @@ def get_channel_id_from_url(url):
             maxResults=1
         )
 
-        response = retry_api_call(lambda: request.execute())
+        response = retry_api_call(
+            lambda: request.execute()
+        )
 
         if response['items']:
+
             return response['items'][0]['snippet']['channelId']
 
+    # CHANNEL URL
     elif url_type == 'channel_id':
 
-        return re.search(r'/channel/([^/?]+)', url).group(1)
+        return re.search(
+            r'/channel/([^/?]+)',
+            url
+        ).group(1)
 
     return None
 
@@ -82,7 +109,9 @@ def get_channel_details(channel_id):
         id=channel_id
     )
 
-    response = retry_api_call(lambda: request.execute())
+    response = retry_api_call(
+        lambda: request.execute()
+    )
 
     if not response['items']:
         return None
@@ -90,10 +119,57 @@ def get_channel_details(channel_id):
     item = response['items'][0]
 
     return {
-        "channel_name": item['snippet']['title'],
-        "uploads_playlist": item['contentDetails']['relatedPlaylists']['uploads']
+
+        "channel_name":
+            item['snippet']['title'],
+
+        "uploads_playlist":
+            item['contentDetails']['relatedPlaylists']['uploads']
+
     }
 
+
+# ============================================================
+# PLAYLIST FUNCTIONS
+# ============================================================
+
+def extract_playlist_id(url):
+
+    match = re.search(r'list=([^&]+)', url)
+
+    if match:
+        return match.group(1)
+
+    return url
+
+
+def get_playlist_details(playlist_id):
+
+    request = youtube.playlists().list(
+        part="snippet",
+        id=playlist_id
+    )
+
+    response = retry_api_call(
+        lambda: request.execute()
+    )
+
+    if not response['items']:
+        return None
+
+    item = response['items'][0]
+
+    return {
+
+        "playlist_name":
+            item['snippet']['title']
+
+    }
+
+
+# ============================================================
+# VIDEO FUNCTIONS
+# ============================================================
 
 def get_all_video_ids_from_playlist(playlist_id):
 
@@ -110,12 +186,19 @@ def get_all_video_ids_from_playlist(playlist_id):
             pageToken=next_page_token
         )
 
-        response = retry_api_call(lambda: request.execute())
+        response = retry_api_call(
+            lambda: request.execute()
+        )
 
         for item in response['items']:
-            video_ids.append(item['contentDetails']['videoId'])
 
-        next_page_token = response.get('nextPageToken')
+            video_ids.append(
+                item['contentDetails']['videoId']
+            )
+
+        next_page_token = response.get(
+            'nextPageToken'
+        )
 
         if not next_page_token:
             break
@@ -132,11 +215,13 @@ def get_video_details(video_ids):
         chunk = video_ids[i:i+50]
 
         request = youtube.videos().list(
-            part="snippet,statistics,contentDetails,status",
+            part="snippet,statistics,status",
             id=",".join(chunk)
         )
 
-        response = retry_api_call(lambda: request.execute())
+        response = retry_api_call(
+            lambda: request.execute()
+        )
 
         for item in response['items']:
 
@@ -144,22 +229,44 @@ def get_video_details(video_ids):
             statistics = item.get('statistics', {})
             status = item.get('status', {})
 
-            raw_date = snippet.get('publishedAt', '')
+            raw_date = snippet.get(
+                'publishedAt',
+                ''
+            )
 
-            published_formatted = datetime.strptime(
-                raw_date,
-                "%Y-%m-%dT%H:%M:%SZ"
-            ).strftime("%d %b %Y") if raw_date else "N/A"
+            if raw_date:
+
+                published_date = datetime.strptime(
+                    raw_date,
+                    "%Y-%m-%dT%H:%M:%SZ"
+                ).strftime("%d %b %Y")
+
+            else:
+
+                published_date = "N/A"
 
             video_data = {
 
-                "Title": snippet.get('title', ''),
-                "Published Date": published_formatted,
-                "Views": int(statistics.get('viewCount', 0)),
-                "Likes": int(statistics.get('likeCount', 0)),
-                "Comments": int(statistics.get('commentCount', 0)),
-                "Privacy Status": status.get('privacyStatus', ''),
-                "URL": f"https://www.youtube.com/watch?v={item['id']}"
+                "Title":
+                    snippet.get('title', ''),
+
+                "Published Date":
+                    published_date,
+
+                "Views":
+                    int(statistics.get('viewCount', 0)),
+
+                "Likes":
+                    int(statistics.get('likeCount', 0)),
+
+                "Comments":
+                    int(statistics.get('commentCount', 0)),
+
+                "Privacy Status":
+                    status.get('privacyStatus', ''),
+
+                "Video URL":
+                    f"https://www.youtube.com/watch?v={item['id']}"
 
             }
 
@@ -181,63 +288,141 @@ def home():
 @app.route('/extract', methods=['POST'])
 def extract():
 
-    youtube_url = request.form.get('youtube_url')
+    try:
 
-    if not youtube_url:
-        return "No YouTube URL provided"
+        youtube_url = request.form.get(
+            'youtube_url'
+        )
 
-    # ============================================================
-    # CHANNEL EXTRACTION
-    # ============================================================
+        if not youtube_url:
 
-    channel_id = get_channel_id_from_url(youtube_url)
+            return "No YouTube URL provided"
 
-    if not channel_id:
-        return "Invalid YouTube Channel URL"
+        url_type = detect_url_type(
+            youtube_url
+        )
 
-    channel_details = get_channel_details(channel_id)
+        # ====================================================
+        # CHANNEL EXTRACTION
+        # ====================================================
 
-    video_ids = get_all_video_ids_from_playlist(
-        channel_details['uploads_playlist']
-    )
+        if url_type in ['handle', 'channel_id']:
 
-    video_data = get_video_details(video_ids)
+            channel_id = get_channel_id_from_url(
+                youtube_url
+            )
 
-    # ============================================================
-    # DATAFRAME
-    # ============================================================
+            if not channel_id:
 
-    df = pd.DataFrame(video_data)
+                return "Could not find channel ID"
 
-    # ============================================================
-    # CSV EXPORT
-    # ============================================================
+            channel_details = get_channel_details(
+                channel_id
+            )
 
-    output_folder = "exports"
+            if not channel_details:
 
-    os.makedirs(output_folder, exist_ok=True)
+                return "Could not fetch channel details"
 
-    safe_name = re.sub(
-        r'[\\/*?:"<>|]',
-        "",
-        channel_details['channel_name']
-    )
+            playlist_id = channel_details[
+                'uploads_playlist'
+            ]
 
-    csv_path = os.path.join(
-        output_folder,
-        f"{safe_name}.csv"
-    )
+            export_name = channel_details[
+                'channel_name'
+            ]
 
-    df.to_csv(csv_path, index=False)
+        # ====================================================
+        # PLAYLIST EXTRACTION
+        # ====================================================
 
-    # ============================================================
-    # DOWNLOAD CSV
-    # ============================================================
+        elif url_type == 'playlist':
 
-    return send_file(
-        csv_path,
-        as_attachment=True
-    )
+            playlist_id = extract_playlist_id(
+                youtube_url
+            )
+
+            playlist_details = get_playlist_details(
+                playlist_id
+            )
+
+            if not playlist_details:
+
+                return "Could not fetch playlist details"
+
+            export_name = playlist_details[
+                'playlist_name'
+            ]
+
+        else:
+
+            return "Unsupported YouTube URL"
+
+        # ====================================================
+        # FETCH VIDEOS
+        # ====================================================
+
+        video_ids = get_all_video_ids_from_playlist(
+            playlist_id
+        )
+
+        if not video_ids:
+
+            return "No videos found"
+
+        video_data = get_video_details(
+            video_ids
+        )
+
+        if not video_data:
+
+            return "No video data extracted"
+
+        # ====================================================
+        # DATAFRAME
+        # ====================================================
+
+        df = pd.DataFrame(video_data)
+
+        # ====================================================
+        # EXPORT CSV
+        # ====================================================
+
+        output_folder = "exports"
+
+        os.makedirs(
+            output_folder,
+            exist_ok=True
+        )
+
+        safe_name = re.sub(
+            r'[\\/*?:"<>|]',
+            "",
+            export_name
+        )
+
+        csv_path = os.path.join(
+            output_folder,
+            f"{safe_name}.csv"
+        )
+
+        df.to_csv(
+            csv_path,
+            index=False
+        )
+
+        # ====================================================
+        # DOWNLOAD CSV
+        # ====================================================
+
+        return send_file(
+            csv_path,
+            as_attachment=True
+        )
+
+    except Exception as e:
+
+        return f"ERROR: {str(e)}"
 
 
 # ============================================================
@@ -246,4 +431,7 @@ def extract():
 
 if __name__ == "__main__":
 
-    app.run(host="0.0.0.0", port=5000)
+    app.run(
+        host="0.0.0.0",
+        port=5000
+    )
