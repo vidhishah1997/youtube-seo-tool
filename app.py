@@ -16,8 +16,8 @@ def home():
 
 @app.route('/extract', methods=['POST'])
 def extract():
-
-    uploaded_file = request.files['file']
+    
+    youtube_url = request.form['youtube_url']
 
     if uploaded_file.filename == '':
         return "No file selected"
