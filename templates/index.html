@@ -2,12 +2,13 @@
 <html class="light" lang="en">
 
 <head>
+
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 
     <title>YouTube Data Extractor</title>
 
-    <!-- Google Fonts -->
+    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 
     <!-- Material Symbols -->
@@ -17,6 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+
         body {
             font-family: 'Sora', sans-serif;
         }
@@ -38,13 +40,14 @@
                 'GRAD' 0,
                 'opsz' 24;
         }
+
     </style>
 
 </head>
 
 <body class="bg-gray-50 red-gradient-bg min-h-screen text-gray-800">
 
-    <!-- Header -->
+    <!-- HEADER -->
 
     <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b shadow-sm">
 
@@ -57,13 +60,15 @@
                 </span>
 
                 <div>
+
                     <h1 class="text-2xl font-bold text-red-600">
                         YouTube Data Extractor
                     </h1>
 
                     <p class="text-sm text-gray-500">
-                        SEO Dashboard
+                        SEO Automation Dashboard
                     </p>
+
                 </div>
 
             </div>
@@ -72,93 +77,110 @@
 
     </header>
 
-    <!-- Main -->
+    <!-- MAIN -->
 
     <main class="max-w-7xl mx-auto px-6 py-12">
 
-        <!-- Hero -->
+        <!-- HERO SECTION -->
 
-        <section class="mb-12">
+        <section class="mb-14">
 
-            <h2 class="text-5xl font-extrabold mb-6 leading-tight">
-                Extract YouTube Channel & Playlist Data
+            <h2 class="text-5xl font-extrabold leading-tight mb-6">
+
+                Extract YouTube Channel &
+                Playlist Data Instantly
+
             </h2>
 
-            <p class="text-lg text-gray-600 max-w-3xl">
-                Upload your extraction file and generate structured YouTube metadata reports for SEO analysis, automation and reporting workflows.
+            <p class="text-lg text-gray-600 max-w-3xl leading-relaxed">
+
+                Enter a YouTube channel URL, handle or playlist ID to extract
+                metadata, video inventory, views, upload dates and SEO insights.
+
             </p>
 
         </section>
 
-        <!-- Features -->
+        <!-- FEATURE CARDS -->
 
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
 
-            <div class="glass-card rounded-2xl p-6">
-                <span class="material-symbols-outlined text-red-600 text-4xl mb-4">
+            <div class="glass-card rounded-3xl p-6 shadow-sm">
+
+                <span class="material-symbols-outlined text-red-600 text-5xl mb-4">
                     analytics
                 </span>
 
-                <h3 class="text-xl font-bold mb-2">
-                    SEO Extraction
+                <h3 class="text-2xl font-bold mb-3">
+                    SEO Metadata
                 </h3>
 
-                <p class="text-gray-600">
-                    Extract views, likes, upload dates, video URLs and metadata.
+                <p class="text-gray-600 leading-relaxed">
+                    Extract titles, views, likes, upload dates and video URLs for SEO analysis.
                 </p>
+
             </div>
 
-            <div class="glass-card rounded-2xl p-6">
-                <span class="material-symbols-outlined text-red-600 text-4xl mb-4">
+            <div class="glass-card rounded-3xl p-6 shadow-sm">
+
+                <span class="material-symbols-outlined text-red-600 text-5xl mb-4">
                     playlist_play
                 </span>
 
-                <h3 class="text-xl font-bold mb-2">
+                <h3 class="text-2xl font-bold mb-3">
                     Playlist Tracking
                 </h3>
 
-                <p class="text-gray-600">
-                    Analyze playlists and identify content grouping opportunities.
+                <p class="text-gray-600 leading-relaxed">
+                    Analyze playlists and organize content clusters for YouTube SEO.
                 </p>
+
             </div>
 
-            <div class="glass-card rounded-2xl p-6">
-                <span class="material-symbols-outlined text-red-600 text-4xl mb-4">
+            <div class="glass-card rounded-3xl p-6 shadow-sm">
+
+                <span class="material-symbols-outlined text-red-600 text-5xl mb-4">
                     download
                 </span>
 
-                <h3 class="text-xl font-bold mb-2">
+                <h3 class="text-2xl font-bold mb-3">
                     CSV Export
                 </h3>
 
-                <p class="text-gray-600">
-                    Download extracted reports for SEO reporting and dashboards.
+                <p class="text-gray-600 leading-relaxed">
+                    Export extracted YouTube data into downloadable CSV reports.
                 </p>
+
             </div>
 
         </section>
 
-        <!-- Upload Form -->
+        <!-- EXTRACTION FORM -->
 
-        <section class="glass-card rounded-3xl p-8 shadow-lg">
+        <section class="glass-card rounded-3xl p-8 shadow-lg mb-14">
 
             <h3 class="text-3xl font-bold mb-8">
-                Upload File For Extraction
+
+                Start YouTube Extraction
+
             </h3>
 
-            <form action="/extract" method="POST" enctype="multipart/form-data">
+            <form action="/extract" method="POST">
 
-                <div class="flex flex-col md:flex-row gap-6 items-end">
+                <div class="flex flex-col md:flex-row gap-5 items-end">
 
                     <div class="flex-grow w-full">
 
                         <label class="block text-sm font-semibold mb-3 uppercase tracking-wide text-gray-500">
-                            Select File
+
+                            Enter YouTube URL or Playlist ID
+
                         </label>
 
                         <input
-                            type="file"
-                            name="file"
+                            type="text"
+                            name="youtube_url"
+                            placeholder="https://youtube.com/@mrbeast OR Playlist ID"
                             required
                             class="w-full bg-white border-2 border-gray-200 rounded-2xl p-4 focus:outline-none focus:border-red-500"
                         >
@@ -169,7 +191,9 @@
                         type="submit"
                         class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all shadow-lg"
                     >
+
                         Start Extraction
+
                     </button>
 
                 </div>
@@ -178,13 +202,14 @@
 
         </section>
 
-        <!-- Mock Results -->
+        <!-- MOCK RESULTS SECTION -->
 
-        <section class="mt-16">
+        <section>
 
             <div class="flex justify-between items-center mb-6">
 
                 <div>
+
                     <h3 class="text-3xl font-bold">
                         Extraction Results
                     </h3>
@@ -192,15 +217,17 @@
                     <p class="text-gray-500">
                         Example dashboard preview
                     </p>
+
                 </div>
 
             </div>
 
-            <!-- Stats -->
+            <!-- STATS -->
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
 
-                <div class="glass-card p-6 rounded-2xl">
+                <div class="glass-card p-6 rounded-3xl">
+
                     <p class="text-sm uppercase text-gray-500 mb-2">
                         Total Videos
                     </p>
@@ -208,9 +235,11 @@
                     <p class="text-3xl font-bold">
                         800
                     </p>
+
                 </div>
 
-                <div class="glass-card p-6 rounded-2xl">
+                <div class="glass-card p-6 rounded-3xl">
+
                     <p class="text-sm uppercase text-gray-500 mb-2">
                         Shorts
                     </p>
@@ -218,9 +247,11 @@
                     <p class="text-3xl font-bold">
                         120
                     </p>
+
                 </div>
 
-                <div class="glass-card p-6 rounded-2xl">
+                <div class="glass-card p-6 rounded-3xl">
+
                     <p class="text-sm uppercase text-gray-500 mb-2">
                         Public Videos
                     </p>
@@ -228,9 +259,11 @@
                     <p class="text-3xl font-bold text-green-600">
                         750
                     </p>
+
                 </div>
 
-                <div class="glass-card p-6 rounded-2xl">
+                <div class="glass-card p-6 rounded-3xl">
+
                     <p class="text-sm uppercase text-gray-500 mb-2">
                         Total Views
                     </p>
@@ -238,6 +271,101 @@
                     <p class="text-3xl font-bold">
                         250M
                     </p>
+
+                </div>
+
+            </div>
+
+            <!-- TABLE -->
+
+            <div class="glass-card rounded-3xl overflow-hidden shadow-lg">
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full">
+
+                        <thead class="bg-red-50">
+
+                            <tr>
+
+                                <th class="text-left p-4">
+                                    Title
+                                </th>
+
+                                <th class="text-left p-4">
+                                    Views
+                                </th>
+
+                                <th class="text-left p-4">
+                                    Likes
+                                </th>
+
+                                <th class="text-left p-4">
+                                    Upload Date
+                                </th>
+
+                                <th class="text-left p-4">
+                                    Type
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr class="border-t">
+
+                                <td class="p-4">
+                                    Giving Away $1,000,000
+                                </td>
+
+                                <td class="p-4">
+                                    182M
+                                </td>
+
+                                <td class="p-4">
+                                    9.2M
+                                </td>
+
+                                <td class="p-4">
+                                    Oct 2023
+                                </td>
+
+                                <td class="p-4">
+                                    Video
+                                </td>
+
+                            </tr>
+
+                            <tr class="border-t">
+
+                                <td class="p-4">
+                                    I Spent 50 Hours In Solitary Confinement
+                                </td>
+
+                                <td class="p-4">
+                                    240M
+                                </td>
+
+                                <td class="p-4">
+                                    12.1M
+                                </td>
+
+                                <td class="p-4">
+                                    Dec 2023
+                                </td>
+
+                                <td class="p-4">
+                                    Video
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
                 </div>
 
             </div>
